@@ -79,27 +79,27 @@ int validate_mac(const char *mac) {
 void handle_mac_update(const char *mac1, const char *mac2, const char *mac3) {
     if (validate_mac(mac1)) {
         printf("Updating MAC Address 1: %s\n", mac1);
-        run_command("setenv ethaddr %s", mac1);
+        run_command("setenv ethaddr ", 0);
     } else {
         printf("Invalid MAC Address 1: %s\n", mac1);
     }
 
     if (mac2 && validate_mac(mac2)) {
         printf("Updating MAC Address 2: %s\n", mac2);
-        run_command("setenv eth1addr %s", mac2);
+        run_command("setenv eth1addr ", 0);
     } else if (mac2) {
         printf("Invalid MAC Address 2: %s\n", mac2);
     }
 
     if (mac3 && validate_mac(mac3)) {
         printf("Updating MAC Address 3: %s\n", mac3);
-        run_command("setenv eth2addr %s", mac3);
+        run_command("setenv eth2addr ", 0);
     } else if (mac3) {
         printf("Invalid MAC Address 3: %s\n", mac3);
     }
 
     // Save the environment to persist changes
-    run_command("saveenv");
+    run_command("saveenv", 0);
 }
 
 // Example hook to process HTTP request (pseudo-code, adapt as per the framework)
