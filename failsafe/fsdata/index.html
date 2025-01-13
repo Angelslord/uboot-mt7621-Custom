@@ -1,19 +1,35 @@
+
 <!doctype html>
 <html>
 <head>
-	<title>MediaTek System Recovery Mode</title>
-	<link rel="stylesheet" type="text/css" href="/style.css">
+    <title>MediaTek System Recovery Mode</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div id="banner">
-		MediaTek U-Boot System Recovery Mode
-	</div>
-	<div id="main">
-		<p>Upload new firmware:</p>
-		<form action="/upload" method="post" enctype="multipart/form-data">
-			<p><input type="file" name="firmware" /></p>
-			<p><input type="submit" id="submit" value="Upload" /></p>
-		</form>
-	</div>
+    <div id="banner">MediaTek U-Boot System Recovery Mode</div>
+    <div id="main">
+        <!-- MAC Address Section -->
+        <h2>Update MAC Addresses</h2>
+        <form action="/update_mac" method="post">
+            <label for="mac1">MAC Address 1:</label>
+            <input type="text" id="mac1" name="mac1" placeholder="00:11:22:33:44:55" required>
+
+            <label for="mac2">MAC Address 2:</label>
+            <input type="text" id="mac2" name="mac2" placeholder="66:77:88:99:AA:BB">
+
+            <label for="mac3">MAC Address 3:</label>
+            <input type="text" id="mac3" name="mac3" placeholder="CC:DD:EE:FF:00:11">
+
+            <input type="submit" value="Update MAC Addresses">
+        </form>
+
+        <!-- Firmware Upload Section -->
+        <h2>Upgrade Firmware</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="firmware">Select Firmware File:</label>
+            <input type="file" id="firmware" name="firmware" accept=".bin" required>
+            <input type="submit" value="Upload Firmware">
+        </form>
+    </div>
 </body>
 </html>
