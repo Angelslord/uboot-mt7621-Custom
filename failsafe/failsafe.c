@@ -296,3 +296,54 @@ static int do_httpd(cmd_tbl_t *cmdtp, int flag, int argc,
 U_BOOT_CMD(httpd, 1, 0, do_httpd,
 	"Start failsafe HTTP server", ""
 );
+
+#include <regex.h>
+
+// Function to validate MAC address format
+int validate_mac(const char *mac) {
+    regex_t regex;
+    const char *pattern = "^[0-9A-Fa-f]{2}(:[0-9A-Fa-f]{2}){5}$";
+    if (regcomp(&regex, pattern, REG_EXTENDED) != 0) {
+        return 0; // Regex compilation failed
+    }
+    int result = regexec(&regex, mac, 0, NULL, 0);
+    regfree(&regex);
+    return result == 0; // Return 1 if match, 0 otherwise
+}
+
+// Handle MAC address submission from the UI
+void handle_mac_update(const char *mac1, const char *mac2, const char *mac3) {
+    if (validate_mac(mac1)) {
+        printf("Updating MAC Address 1: %s\n", mac1);
+        run_command("setenv ethaddr %s", mac1);
+    } else {
+        printf("Invalid MAC Address 1: %s\n", mac1);
+    }
+
+    if (mac2 && validate_mac(mac2)) {
+        printf("Updating MAC Address 2: %s\n", mac2);
+        run_command("setenv eth1addr %s", mac2);
+    } else if (mac2) {
+        printf("Invalid MAC Address 2: %s\n", mac2);
+    }
+
+    if (mac3 && validate_mac(mac3)) {
+        printf("Updating MAC Address 3: %s\n", mac3);
+        run_command("setenv eth2addr %s", mac3);
+    } else if (mac3) {
+        printf("Invalid MAC Address 3: %s\n", mac3);
+    }
+
+    // Save the environment to persist changes
+    run_command("saveenv");
+}
+
+// Example hook to process HTTP request (pseudo-code, adapt as per the framework)
+void process_request(const char *request_data) {
+    char mac1[18], mac2[18], mac3[18];
+    // Extract MAC addresses from request_data (pseudo-parsing logic)
+    sscanf(request_data, "mac1=%17s&mac2=%17s&mac3=%17s", mac1, mac2, mac3);
+
+    // Handle MAC update
+    handle_mac_update(mac1, mac2, mac3);
+}
