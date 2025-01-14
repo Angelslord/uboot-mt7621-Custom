@@ -66,7 +66,7 @@ on:
         description: 'Use Old DDR Timing Parameters'
         required: true
         type: boolean
-        default: 'false'
+        default: false
       baudrate:
         description: 'Baud Rate'
         required: true
