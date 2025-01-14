@@ -6,7 +6,7 @@ menuconfig WEBUI_FAILSAFE
 	bool "Enable Failsafe Web UI"
 	select TCP
 	select HTTPD
-	default n
+	default y
 	help
 	  Enable Web based failsafe UI
 
@@ -14,10 +14,10 @@ if WEBUI_FAILSAFE
 
 config WEBUI_FAILSAFE_ON_AUTOBOOT_FAIL
 	bool "Start Failsafe Web UI on autoboot failure"
-	default n
+	default y
 
 config FAILSAFE_ON_BUTTON
 	bool "Press and hold the reset button to enter the failsafe mode"
-	default n
+	default y
 
 endif # WEBUI_FAILSAFE
